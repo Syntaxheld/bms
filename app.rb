@@ -14,6 +14,7 @@ get "/" do
   erb :form
 end
 
+# https://www.braintreepayments.com/docs/ruby/customers/create#customer_with_credit_card
 post "/card/add" do
   result = Braintree::Customer.create({
     :id => params[:email],    # Braintree returns: "Customer ID is invalid (use only letters, numbers, '-', and '_')." ;; so we need to find a better scheme (sha256?)
@@ -36,6 +37,10 @@ post "/card/add" do
   end
 end
 
+# https://www.braintreepayments.com/docs/ruby/reference/sandbox
+
+# https://www.braintreepayments.com/docs/ruby/transactions/create#creating_from_vault
+# https://www.braintreepayments.com/docs/ruby/transactions/create_from_vault
 post "/transaction/pay" do
   result = Braintree::Transaction.sale(
     :amount => params[:amount],
@@ -51,4 +56,10 @@ post "/transaction/pay" do
     out["currency_iso_code"] = result.transaction.currency_iso_code
     return JSON.generate(out)
   end
+end
+
+# https://www.braintreepayments.com/docs/ruby/credit_cards/search
+get "/card/info" do
+  out = {"success" => false, "error" => "not implemented"}
+  halt(501, JSON.generate(out))
 end
