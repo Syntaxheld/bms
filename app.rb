@@ -39,7 +39,7 @@ end
 post "/transaction/pay" do
   result = Braintree::Transaction.sale(
     :amount => params[:amount],
-    :customer_id => params[:email],
+    :customer_id => params[:email]
   )
   
   out = {"success" => result.success?, "error" => nil}
