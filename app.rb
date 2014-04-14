@@ -16,7 +16,7 @@ end
 
 post "/card/add" do
   result = Braintree::Customer.create({
-    :id => params[:email],
+    :id => params[:email],    # Braintree returns: "Customer ID is invalid (use only letters, numbers, '-', and '_')." ;; so we need to find a better scheme (sha256?)
     "credit_card" => {
       "number" => params[:card_number],
       "cvv" => params[:cvv],
